@@ -34,7 +34,7 @@
 
 Proyek ini dibangun untuk mempelajari bagaimana **Laravel** dan **Nuxt.js** bisa bekerja sama dalam satu ekosistem, dimana:
 
-- **Laravel** → Mengelola data kampus (dosen, mahasiswa, prodi, dll.) + menyajikan halaman web
+- **Laravel** → Mengelola data kampus (dosen, fakultas, prodi, dll.) + menyajikan halaman web
 - **Nuxt.js (fuzan)** → Berperan sebagai **AI Gateway** yang menerima data dari Laravel, meneruskannya ke model AI (via OpenRouter), dan mengembalikan jawaban
 
 Konsep utama yang dipelajari: **Context Passing** — Laravel mengemas data dari database menjadi sebuah "konteks" lalu mengirimkannya ke AI agar AI bisa menjawab pertanyaan berdasarkan data nyata.
@@ -56,7 +56,7 @@ Konsep utama yang dipelajari: **Context Passing** — Laravel mengemas data dari
 |---|---|---|
 | Chat | `/ai` | Chat bubble interface berbasis data kampus real-time |
 
-- AI mengetahui data **dosen**, **program studi**, dan **statistik mahasiswa**
+- AI mengetahui data **dosen**, **program studi**, **FAQ**, **informasi kampus**, dan **kalender akademik**
 - AI ingat **riwayat percakapan** dalam satu sesi (chat history)
 - Tombol shortcut → pertanyaan populer
 - Floating button AI di semua halaman
@@ -65,7 +65,6 @@ Konsep utama yang dipelajari: **Context Passing** — Laravel mengemas data dari
 | Halaman | URL | Keterangan |
 |---|---|---|
 | Login | `/login` | Login dengan email & password |
-| Register | `/register` | Registrasi akun baru (default role: admin) |
 | Logout | POST `/logout` | Menghapus sesi pengguna |
 
 ### 🛡️ Admin Dashboard
@@ -75,10 +74,8 @@ Konsep utama yang dipelajari: **Context Passing** — Laravel mengemas data dari
 | Fakultas | `/admin/fakultas` | CRUD data fakultas |
 | Program Studi | `/admin/program-studi` | CRUD data program studi |
 | Dosen | `/admin/dosen` | CRUD data dosen |
-| Mahasiswa | `/admin/mahasiswa` | CRUD data mahasiswa |
-| Mata Kuliah | `/admin/mata-kuliah` | CRUD data mata kuliah |
-| Kelas | `/admin/kelas` | CRUD data kelas |
-| KRS | `/admin/krs` | CRUD Kartu Rencana Studi |
+| Users | `/admin/users` | CRUD akun admin |
+| FAQ & AI | `/admin/faq` | Kelola FAQ + antrian belajar AI |
 
 ---
 
@@ -86,13 +83,13 @@ Konsep utama yang dipelajari: **Context Passing** — Laravel mengemas data dari
 
 | Teknologi | Versi | Fungsi |
 |---|---|---|
-| **Laravel** | 12.x | Backend utama, routing, database ORM |
-| **Nuxt.js** | 3.x | AI Gateway / microservice AI |
+| **Laravel** | 13.x | Backend utama, routing, database ORM |
+| **Nuxt.js** | 4.x | AI Gateway / microservice AI |
 | **OpenRouter** | - | Akses ke berbagai model AI (Gemini, GPT, dll.) |
-| **Google Gemini 2.0 Flash** | - | Model AI yang digunakan |
+| **Gemini 2.0 Flash** | - | Model AI yang digunakan (via OpenRouter) |
 | **MySQL** | - | Database utama |
-| **Tailwind CSS** | 3.x | Styling utility-first |
-| **DaisyUI** | 4.x | Komponen UI berbasis Tailwind |
+| **Tailwind CSS** | 4.x | Styling utility-first |
+| **DaisyUI** | 5.x | Komponen UI berbasis Tailwind |
 | **Alpine.js** | 3.x | Interaktivitas JavaScript ringan di frontend |
 | **PHP** | 8.3+ | Bahasa backend Laravel |
 | **Node.js** | 22+ | Runtime untuk Nuxt.js |
@@ -107,55 +104,48 @@ deshboard/                          ← ROOT PROJECT LARAVEL
 ├── app/
 │   ├── Http/
 │   │   ├── Controllers/
-│   │   │   ├── AiController.php        ← Controller utama AI
-│   │   │   ├── AuthController.php      ← Login, Register, Logout
-│   │   │   ├── LandingController.php   ← Halaman publik (fakultas, prodi, kontak)
+│   │   │   ├── AiController.php          ← Jembatan AI (context passing)
+│   │   │   ├── AuthController.php        ← Login & Logout
+│   │   │   ├── LandingController.php     ← Halaman publik
 │   │   │   └── Admin/
 │   │   │       ├── DashboardController.php
 │   │   │       ├── DosenController.php
 │   │   │       ├── FakultasController.php
-│   │   │       ├── MahasiswaController.php
-│   │   │       └── ... (CRUD controllers)
+│   │   │       ├── FaqController.php       ← FAQ + AI Learning Queue
+│   │   │       ├── ProgramStudiController.php
+│   │   │       └── UserController.php
 │   │   └── Middleware/
-│   └── Models/
-│       ├── User.php
-│       ├── Dosen.php
-│       ├── Mahasiswa.php
-│       ├── Fakultas.php
-│       ├── ProgramStudi.php
-│       ├── MataKuliah.php
-│       ├── Kelas.php
-│       └── Krs.php
+│   │       └── AdminMiddleware.php
+│   ├── Models/
+│   │   ├── User.php
+│   │   ├── Dosen.php
+│   │   ├── Fakultas.php
+│   │   ├── ProgramStudi.php
+│   │   ├── Faq.php
+│   │   ├── AiQuestionLog.php
+│   │   ├── AiTermAlias.php
+│   │   ├── InformasiKampus.php
+│   │   └── KalenderAkademik.php
+│   └── Services/
+│       ├── AiLearningService.php         ← Core AI learning engine
+│       └── TopicClassifier.php
 │
 ├── resources/views/
-│   ├── welcome.blade.php               ← Landing page utama
-│   ├── ai-feature.blade.php            ← Halaman chat AI
-│   ├── fakultas.blade.php              ← Halaman daftar fakultas
-│   ├── program-studi.blade.php         ← Halaman daftar prodi
-│   ├── kontak.blade.php                ← Halaman kontak
-│   ├── layout/
-│   │   └── landing.blade.php           ← Layout utama landing page
-│   └── components/landing/
-│       ├── navbar.blade.php            ← Navigasi
-│       ├── hero.blade.php              ← Section hero
-│       ├── tentang.blade.php           ← Section tentang kampus
-│       ├── fakultas.blade.php          ← Section preview fakultas
-│       └── footer.blade.php            ← Footer
+│   ├── welcome.blade.php                 ← Landing page
+│   ├── ai-feature.blade.php              ← Chat AI (Alpine.js SPA)
+│   ├── layout/ (landing, app, guest)
+│   ├── auth/login.blade.php
+│   ├── components/ (landing/, sidebar/)
+│   └── admin/ (dashboard, fakultas, dosen, program-studi, faq, users)
 │
-├── routes/
-│   └── web.php                         ← Semua definisi route
+├── routes/web.php                        ← Semua route
+├── database/migrations/                  ← 20 migration files
 │
-├── database/migrations/                ← Struktur tabel database
+├── fuzan/                                ← NUXT.JS — AI GATEWAY
+│   ├── server/api/ai.post.ts             ← ⭐ Endpoint utama AI
+│   └── ... (nuxt.config.ts, .env)
 │
-└── fuzan/                              ← NUXT.JS — AI GATEWAY
-    ├── server/api/
-    │   ├── ai.post.ts                  ← ⭐ Endpoint utama AI
-    │   └── chat.post.js                ← Endpoint chat alternatif
-    ├── app/pages/
-    │   ├── index.vue                   ← Landing page Nuxt (tidak dipakai user)
-    │   └── chat.vue                    ← Halaman chat Nuxt (tidak dipakai user)
-    ├── nuxt.config.ts                  ← Konfigurasi Nuxt
-    └── .env                            ← API key OpenRouter
+└── docs/DESAIN.md                        ← Design system
 ```
 
 ---
@@ -178,7 +168,7 @@ Berikut gambaran besar bagaimana semua bagian terhubung:
 │                                                             │
 │  Khusus AI:                                                 │
 │  POST /ai/ask → AiController::ask()                        │
-│    1. Ambil data dari MySQL (Dosen, Prodi, Mahasiswa)       │
+│    1. Ambil data dari MySQL (Dosen, Prodi, FAQ, dll.)       │
 │    2. Susun "context" dari data tersebut                    │
 │    3. POST ke Nuxt dengan context + prompt + history        │
 └─────────────────────┬───────────────────────────────────────┘
@@ -266,25 +256,15 @@ public function ask(Request $request)
         'fakultas'   => optional($p->fakultas)->name_fakultas,
     ])->toArray();
 
-    // === AMBIL STATISTIK MAHASISWA ===
-    // Kelompokkan per prodi, hitung total & yang aktif
-    $konteksMahasiswa = Mahasiswa::with('programStudi')
-        ->get()
-        ->groupBy(fn($m) => optional($m->programStudi)->nama_prodi)
-        ->map(fn($group, $prodi) => [
-            'prodi'  => $prodi,
-            'jumlah' => $group->count(),
-            'aktif'  => $group->where('status', 'aktif')->count(),
-        ])
-        ->values()->toArray();
+    // (juga ambil data FAQ, InformasiKampus, KalenderAkademik...)
 
     // === KIRIM KE NUXT ===
     $response = Http::timeout(60)->post('http://localhost:3000/api/ai', [
-        'prompt'            => $prompt,
-        'history'           => $history,
-        'konteks_dosen'     => $konteksDosen,
-        'konteks_prodi'     => $konteksProdi,
-        'konteks_mahasiswa' => $konteksMahasiswa,
+        'prompt'       => $prompt,
+        'history'      => $history,
+        'konteks_dosen' => $konteksDosen,
+        'konteks_prodi' => $konteksProdi,
+        // ... context lainnya
     ]);
 }
 ```
@@ -303,7 +283,7 @@ Di `fuzan/server/api/ai.post.ts`, Nuxt menerima data dan mempersiapkan percakapa
 export default defineEventHandler(async (event) => {
   const body = await readBody(event); // ← terima data dari Laravel
 
-  const { prompt, history, konteks_dosen, konteks_prodi, konteks_mahasiswa } = body;
+  const { prompt, history, konteks_dosen, konteks_prodi, konteks_faq, konteks_kampus } = body;
 
   // === BANGUN SYSTEM PROMPT ===
   // System prompt = "instruksi" untuk AI, berisi data kampus
@@ -318,7 +298,7 @@ export default defineEventHandler(async (event) => {
     systemMessage += `\n=== DATA DOSEN ===\n${listDosen}`;
   }
 
-  // (Begitu pula untuk prodi dan mahasiswa...)
+  // (Begitu pula untuk prodi, faq, info kampus...)
 
   // === SUSUN PESAN UNTUK AI ===
   const chatMessages = [
@@ -359,49 +339,27 @@ User tanya → Laravel ambil DB → Susun context → Kirim ke Nuxt
 
 ```
 ┌──────────┐        ┌─────────────────┐        ┌──────────────┐
-│  users   │        │    fakultas     │        │  mata_kuliahs│
+│  users   │        │    fakultas     │        │  dosens      │
 ├──────────┤        ├─────────────────┤        ├──────────────┤
 │ id (PK)  │        │ id (PK)         │        │ id (PK)      │
-│ name     │        │ name_fakultas   │        │ kode_mk      │
-│ email    │        │ kode_fakultas   │        │ nama_mk      │
-│ password │        └────────┬────────┘        │ sks          │
+│ name     │        │ name_fakultas   │        │ user_id (FK) │
+│ email    │        │ kode_fakultas   │        │ nidn         │
+│ password │        └────────┬────────┘        │ nama         │
 │ role     │                 │ 1               │ prodi_id(FK) │
-└────┬─────┘                 │                 └──────┬───────┘
-     │ 1                     │ memiliki               │
-     │                       ▼ banyak                 │
-     ├───────────┐   ┌───────────────────┐            │
-     │           │   │  program_studis   │            │
-     │           │   ├───────────────────┤            │
-     │           │   │ id (PK)           │◄───────────┘
-     │           │   │ fakultas_id (FK)  │
-     │           │   │ nama_prodi        │
-     │           │   │ jenjang (S1/S2..) │
-     │           │   │ kode_prodi        │
-     │           │   └──────┬────────────┘
-     │           │          │ 1
-     │           │          │ memiliki banyak
-     │           │    ┌─────┴────┐    ┌──────────────┐
-     │           │    ▼          ▼    │    kelas     │
-     │    ┌──────┴───┐  ┌────────────┤├─────────────┤
-     │    │  dosens  │  │ mahasiswas ││ id (PK)     │
-     │    ├──────────┤  ├────────────┤│ dosen_id(FK)│
-     │    │ id (PK)  │  │ id (PK)    ││ mk_id (FK)  │
-     │    │ user_id  │◄─┤ user_id    ││ nama_kelas  │
-     │    │ (FK)     │  │ (FK)       │└──────┬──────┘
-     │    │ nidn     │  │ nim        │       │
-     │    │ nama     │  │ nama       │       │ 1
-     │    │ email    │  │ prodi_id   │       │
-     │    │ prodi_id │  │ (FK)       │       ▼ banyak
-     │    │ jabatan  │  │ angkatan   │  ┌──────────┐
-     │    └──────────┘  │ status     │  │   krs    │
-     │                  └─────┬──────┘  ├──────────┤
-     └──────────────────────► │         │ id (PK)  │
-                              │         │ mhs_id   │
-                              └────────►│ kelas_id │
-                                        │ semester │
-                                        │ thn_ajr  │
-                                        │ status   │
-                                        └──────────┘
+└──────────┘                 │                  │ jabatan      │
+                             │ memiliki         └──────────────┘
+                             ▼ banyak
+                    ┌───────────────────┐
+                    │  program_studis   │
+                    ├───────────────────┤
+                    │ id (PK)           │
+                    │ fakultas_id (FK)  │
+                    │ nama_prodi        │
+                    │ jenjang (S1/S2..) │
+                    │ kode_prodi        │
+                    └───────────────────┘
+
+📌 Tabel lain: faqs, ai_question_logs, ai_term_aliases, informasi_kampus, kalender_akademik
 ```
 
 ---
@@ -452,30 +410,34 @@ Data dosen terhubung ke user (login) dan program studi.
 | prodi_id | Foreign Key | → tabel `program_studis` |
 | jabatan | string | Lektor, Professor, dll. |
 
-### Tabel `mahasiswas`
-Data mahasiswa terhubung ke user dan prodi.
+### Tabel `faqs`
+Pertanyaan & jawaban yang jadi referensi AI.
 
 | Kolom | Tipe | Keterangan |
 |---|---|---|
 | id | Primary Key | - |
-| user_id | Foreign Key | → tabel `users` |
-| nim | string, unique | Nomor Induk Mahasiswa |
-| nama | string | Nama lengkap |
-| prodi_id | Foreign Key | → tabel `program_studis` |
-| angkatan | integer | Tahun masuk (ex: 2023) |
-| status | string | `aktif`, `cuti`, `lulus` |
+| pertanyaan | text | Pertanyaan |
+| jawaban | text | Jawaban resmi |
+| kategori | string | Biaya, Akademik, dll. |
+| is_active | boolean | Aktif/tidak |
 
-### Tabel `krs`
-Kartu Rencana Studi — mahasiswa memilih kelas di semester tertentu.
+### Tabel `ai_question_logs`
+Log pertanyaan user untuk pembelajaran AI.
 
 | Kolom | Tipe | Keterangan |
 |---|---|---|
 | id | Primary Key | - |
-| mahasiswa_id | Foreign Key | → tabel `mahasiswas` |
-| kelas_id | Foreign Key | → tabel `kelas` |
-| semester | integer | Semester ke berapa |
-| tahun_ajaran | string | ex: `2024/2025` |
-| status | enum | `pending`, `disetujui`, `ditolak` |
+| pertanyaan_user | text | Pertanyaan asli |
+| jawaban_ai | text | Jawaban dari AI |
+| jumlah | integer | Frekuensi ditanyakan |
+| status | string | new → suggested → promoted |
+| confidence_score | integer | Skor kepercayaan AI |
+
+### Tabel `informasi_kampus`
+Key-value store untuk data kampus (rektor, visi, alamat).
+
+### Tabel `kalender_akademik`
+Event akademik (UTS, UAS, libur, dll).
 
 ---
 
@@ -591,14 +553,13 @@ Route::post('/ai/ask', [AiController::class, 'ask'])->name('ai.ask'); // proses 
 Route::middleware('guest')->group(function () {
     Route::get('/login', ...);
     Route::post('/login', ...);
-    Route::get('/register', ...);
-    Route::post('/register', ...);
 });
 
 // Admin (harus login DAN role = admin)
 Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
-    Route::resource('dosen', DosenController::class);   // auto-generate 7 route CRUD
-    Route::resource('mahasiswa', MahasiswaController::class);
+    Route::resource('dosen', DosenController::class);
+    Route::resource('users', UserController::class);
+    Route::resource('faq', FaqController::class);
     // dst...
 });
 ```
@@ -612,8 +573,8 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
 $prompt  = $request->input('prompt');   // pertanyaan user
 $history = $request->input('history', []); // array riwayat chat
 
-// 2. Query semua data yang dibutuhkan AI
-$dosens = Dosen::with('programStudi')->get(); // dengan relasi
+// 2. Query semua data yang dibutuhkan AI (dosen, prodi, faq, info kampus...)
+$dosens = Dosen::with('programStudi')->get();
 
 // 3. Format ulang data agar mudah dibaca AI
 $konteksDosen = $dosens->map(fn($d) => [...])->toArray();
@@ -727,7 +688,7 @@ AuthController::login()
 
 - [ ] Tambah **streaming response** agar jawaban AI muncul kata per kata
 - [ ] Simpan riwayat chat ke database agar history tidak hilang saat refresh
-- [ ] Tambah context **KRS dan Kelas** ke AI agar bisa menjawab pertanyaan jadwal
+- [ ] Tambah context **Kelas** ke AI agar bisa menjawab pertanyaan jadwal
 - [ ] Implementasi **email** untuk form kontak menggunakan Laravel Mail
 - [ ] Tambah **Google Maps embed** sungguhan di halaman kontak
 
