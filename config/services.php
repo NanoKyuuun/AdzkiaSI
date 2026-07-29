@@ -35,4 +35,8 @@ return [
         ],
     ],
 
+    'fuzan_ai' => [
+        'url' => env('FUZAN_AI_URL', 'http://localhost:3000'),
+    ],
+
 ];

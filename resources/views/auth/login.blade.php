@@ -1,49 +1,39 @@
 <x-guest>
-
-    <div class="mb-8 text-center">
-        <h2 class="text-3xl font-bold text-primary mb-2">Login</h2>
-        <p class="text-sm text-base-content/60">Selamat datang kembali! Silakan masuk.</p>
+    <div class="text-center mb-8">
+        <div class="inline-flex items-center justify-center w-12 h-12 rounded bg-primary-500 mb-4">
+            <svg class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+            </svg>
+        </div>
+        <h1 class="text-lg font-bold text-text-900">Masuk ke AdzkiaSI</h1>
+        <p class="text-sm text-text-600 mt-1">Administrator dashboard</p>
     </div>
 
     <form method="POST" action="{{ route('login') }}" class="space-y-4">
         @csrf
 
-        <div class="form-control w-full">
-            <label class="label pt-0">
-                <span class="label-text font-semibold">Email</span>
-            </label>
-            <input type="email" name="email" value="{{ old('email') }}" 
-                class="input input-bordered w-full @error('email') input-error @enderror" 
+        <div>
+            <label class="block text-xs font-medium text-text-600 mb-1.5">Email</label>
+            <input type="email" name="email" value="{{ old('email') }}"
+                class="input-field @error('email') border-danger @enderror"
                 placeholder="admin@gmail.com" required autofocus>
             @error('email')
-                <span class="text-error text-xs mt-1">{{ $message }}</span>
+                <p class="text-xs text-danger mt-1">{{ $message }}</p>
             @enderror
         </div>
 
-        <div class="form-control w-full">
-            <label class="label">
-                <span class="label-text font-semibold">Password</span>
-            </label>
-            <input type="password" name="password" 
-                class="input input-bordered w-full @error('password') input-error @enderror" 
-                placeholder="••••••••" required>
+        <div>
+            <label class="block text-xs font-medium text-text-600 mb-1.5">Kata Sandi</label>
+            <input type="password" name="password"
+                class="input-field @error('password') border-danger @enderror"
+                placeholder="password" required>
             @error('password')
-                <span class="text-error text-xs mt-1">{{ $message }}</span>
+                <p class="text-xs text-danger mt-1">{{ $message }}</p>
             @enderror
         </div>
 
-        <div class="pt-4">
-            <button class="btn btn-primary btn-block text-lg">
-                Masuk
-            </button>
-        </div>
+        <button type="submit" class="w-full bg-primary-600 hover:bg-primary-500 text-white font-semibold py-2.5 px-4 rounded-md transition-colors text-sm">
+            Masuk
+        </button>
     </form>
-
-    <div class="mt-8 pt-6 border-t border-base-200 text-center">
-        <p class="text-sm">
-            Belum punya akun? 
-            <a href="{{ route('register') }}" class="link link-primary font-bold">Register</a>
-        </p>
-    </div>
-
 </x-guest>

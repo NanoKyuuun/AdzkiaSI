@@ -29,37 +29,13 @@ class AuthController extends Controller
                 return redirect()->intended('/admin/dashboard');
             }
             
+            // Fallback jika ada role lain yang tidak sengaja login
             return redirect()->intended('/');
         }
 
         return back()->withErrors([
-            'email' => 'The provided credentials do not match our records.',
+            'email' => 'Kredensial yang Anda masukkan tidak cocok dengan data kami.',
         ])->onlyInput('email');
-    }
-
-    public function showRegister()
-    {
-        return view('auth.register');
-    }
-
-    public function register(Request $request)
-    {
-        $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8'],
-        ]);
-
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'role' => 'admin',
-        ]);
-
-        Auth::login($user);
-
-        return redirect('/admin/dashboard');
     }
 
     public function logout(Request $request)

@@ -1,0 +1,124 @@
+- generic [ref=e2]:
+  - complementary [ref=e3]:
+    - generic [ref=e4]:
+      - generic [ref=e5]:
+        - img [ref=e7]
+        - generic [ref=e9]: KampusKu
+      - navigation [ref=e10]:
+        - paragraph [ref=e11]: Menu
+        - link "Dashboard" [ref=e12] [cursor=pointer]:
+          - /url: http://localhost:8000/admin/dashboard
+          - img [ref=e13]
+          - generic [ref=e15]: Dashboard
+        - paragraph [ref=e16]: Informasi
+        - link "Fakultas" [ref=e17] [cursor=pointer]:
+          - /url: http://localhost:8000/admin/fakultas
+          - img [ref=e18]
+          - generic [ref=e20]: Fakultas
+        - link "Program Studi" [ref=e21] [cursor=pointer]:
+          - /url: http://localhost:8000/admin/program-studi
+          - img [ref=e22]
+          - generic [ref=e24]: Program Studi
+        - link "Dosen" [ref=e25] [cursor=pointer]:
+          - /url: http://localhost:8000/admin/dosen
+          - img [ref=e26]
+          - generic [ref=e28]: Dosen
+        - paragraph [ref=e29]: Sistem
+        - link "Admin" [ref=e30] [cursor=pointer]:
+          - /url: http://localhost:8000/admin/users
+          - img [ref=e31]
+          - generic [ref=e34]: Admin
+        - link "FAQ & AI" [ref=e35] [cursor=pointer]:
+          - /url: http://localhost:8000/admin/faq
+          - img [ref=e36]
+          - generic [ref=e38]: FAQ & AI
+      - button "Keluar" [ref=e41] [cursor=pointer]:
+        - img [ref=e42]
+        - generic [ref=e44]: Keluar
+  - generic [ref=e45]:
+    - banner [ref=e46]:
+      - button [ref=e47] [cursor=pointer]:
+        - img [ref=e48]
+      - generic [ref=e51]: Laravel
+      - generic [ref=e52]:
+        - generic [ref=e53]: Admin Utama
+        - generic [ref=e54]: admin
+        - button "Keluar" [ref=e56] [cursor=pointer]:
+          - img [ref=e57]
+    - main [ref=e59]:
+      - generic [ref=e60]:
+        - heading "Dashboard" [level=1] [ref=e62]
+        - generic [ref=e63]:
+          - generic [ref=e64]:
+            - generic [ref=e65]:
+              - paragraph [ref=e66]: Fakultas
+              - paragraph [ref=e67]: "3"
+            - generic [ref=e68]:
+              - paragraph [ref=e69]: Program Studi
+              - paragraph [ref=e70]: "6"
+            - generic [ref=e71]:
+              - paragraph [ref=e72]: Dosen
+              - paragraph [ref=e73]: "16"
+            - generic [ref=e74]:
+              - paragraph [ref=e75]: Interaksi AI
+              - paragraph [ref=e76]: "2"
+          - generic [ref=e77]:
+            - generic [ref=e78]:
+              - generic [ref=e79]:
+                - generic [ref=e80]:
+                  - heading "Kandidat FAQ" [level=2] [ref=e81]
+                  - paragraph [ref=e82]: Berdasarkan frekuensi & confidence score
+                - link "Lihat semua" [ref=e83] [cursor=pointer]:
+                  - /url: http://localhost:8000/admin/faq?tab=log
+              - generic [ref=e84]:
+                - generic [ref=e85]:
+                  - generic [ref=e86]:
+                    - generic [ref=e87]: new
+                    - generic [ref=e88]: Biaya
+                    - generic [ref=e89]: · 1x
+                  - paragraph [ref=e90]: Biaya SPP per semester berapa?
+                  - paragraph [ref=e91]: "Biaya SPP (Biaya Pendidikan) per semester di Universitas Adzkia untuk mahasiswa S1 adalah sebagai berikut, tergantung pada fakultas: | Fakultas | Biaya SPP per Semester | |----------|----------------------| | **Fakultas Teknik dan Informatika (FTI)** | **Rp 5.000.000,-** | | **Fakultas Ekonomi dan Bisnis (FEB)** | **Rp 4.500.000,-** | | **Fakultas Ilmu Sosial dan Ilmu Politik (FISIP)** | **Rp 4.000.000,-** | Pembayaran dapat dilakukan melalui transfer bank (Mandiri atau BRI) atau langsung ke bagian keuangan kampus. Jika Anda membutuhkan informasi lebih lanjut tentang pembayaran atau opsi lain, jangan ragu untuk menghubungi bagian keuangan atau Humas Universitas Adzkia."
+                  - generic [ref=e92]:
+                    - img [ref=e93]
+                    - text: 72%
+                - generic [ref=e95]:
+                  - generic [ref=e96]:
+                    - generic [ref=e97]: new
+                    - generic [ref=e98]: Umum
+                    - generic [ref=e99]: · 1x
+                  - paragraph [ref=e100]: siapa nama presiden RI sekarang?
+                  - paragraph [ref=e101]: Maaf, saya tidak memiliki informasi tentang presiden Republik Indonesia saat ini. Sebagai asisten informasi Universitas Adzkia, saya hanya dapat memberikan informasi yang tercantum dalam data kampus kami, seperti tentang fakultas, program studi, dosen, mata kuliah, jadwal kelas, kalender akademik, biaya kuliah, dan informasi umum kampus lainnya. Jika Anda membutuhkan informasi tentang presiden RI, silakan menghubungi sumber informasi resmi seperti website Pemerintah Indonesia atau kantor hamas.
+                  - generic [ref=e102]:
+                    - img [ref=e103]
+                    - text: 64%
+            - generic [ref=e105]:
+              - generic [ref=e106]:
+                - heading "Status Pembelajaran AI" [level=3] [ref=e107]
+                - generic [ref=e108]:
+                  - generic [ref=e109]:
+                    - paragraph [ref=e110]: Suggested
+                    - paragraph [ref=e111]: "0"
+                  - generic [ref=e112]:
+                    - paragraph [ref=e113]: Pending Review
+                    - paragraph [ref=e114]: "2"
+                  - generic [ref=e115]:
+                    - paragraph [ref=e116]: High Confidence
+                    - paragraph [ref=e117]: "0"
+                  - generic [ref=e118]:
+                    - paragraph [ref=e119]: Promoted
+                    - paragraph [ref=e120]: "0"
+              - generic [ref=e121]:
+                - heading "Topik Populer" [level=3] [ref=e122]
+                - generic [ref=e123]:
+                  - generic [ref=e124]: Biaya
+                  - generic [ref=e125]: 1x
+                - generic [ref=e126]:
+                  - generic [ref=e127]: Umum
+                  - generic [ref=e128]: 1x
+              - link "FuzanAI Uji coba asisten AI kampus" [ref=e129] [cursor=pointer]:
+                - /url: http://localhost:8000/ai
+                - generic [ref=e130]:
+                  - generic [ref=e131]:
+                    - heading "FuzanAI" [level=3] [ref=e132]
+                    - paragraph [ref=e133]: Uji coba asisten AI kampus
+                  - img [ref=e134]

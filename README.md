@@ -1,4 +1,4 @@
-# 🎓 KampusKu — Sistem Informasi Akademik + AI Chatbot
+# AdzkiaSI — Sistem Informasi Akademik + AI Chatbot
 
 <p align="center">
   <img src="https://img.shields.io/badge/Laravel-12.x-FF2D20?style=for-the-badge&logo=laravel&logoColor=white"/>
@@ -8,7 +8,7 @@
   <img src="https://img.shields.io/badge/TailwindCSS-Styling-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white"/>
 </p>
 
-> **KampusKu** adalah website sistem informasi akademik kampus berbasis **Laravel** yang dilengkapi dengan **AI Chatbot** bernama **FuzanAI**. AI-nya berjalan di atas **Nuxt.js** (folder `fuzan/`) dan berkomunikasi dengan Laravel melalui HTTP menggunakan pendekatan **Context Passing**.
+> **AdzkiaSI** adalah website sistem informasi akademik kampus berbasis **Laravel** yang dilengkapi dengan **AI Chatbot** bernama **FuzanAI**. AI-nya berjalan di atas **Nuxt.js** (folder `fuzan/`) dan berkomunikasi dengan Laravel melalui HTTP menggunakan pendekatan **Context Passing**.
 
 ---
 
@@ -510,7 +510,7 @@ php artisan key:generate
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
 DB_PORT=3306
-DB_DATABASE=kampusku_db   # ← nama database yang kamu buat
+DB_DATABASE=adzkia_si   # ← nama database yang kamu buat
 DB_USERNAME=root
 DB_PASSWORD=               # ← password MySQL kamu
 ```

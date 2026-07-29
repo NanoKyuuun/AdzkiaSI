@@ -1,0 +1,124 @@
+- generic [ref=f23e2]:
+  - complementary [ref=f23e3]:
+    - generic [ref=f23e4]:
+      - generic [ref=f23e5]:
+        - img [ref=f23e7]
+        - generic [ref=f23e9]: KampusKu
+      - navigation [ref=f23e10]:
+        - paragraph [ref=f23e11]: Menu
+        - link "Dashboard" [ref=f23e12] [cursor=pointer]:
+          - /url: http://localhost:8000/admin/dashboard
+          - img [ref=f23e13]
+          - generic [ref=f23e15]: Dashboard
+        - paragraph [ref=f23e16]: Informasi
+        - link "Fakultas" [ref=f23e17] [cursor=pointer]:
+          - /url: http://localhost:8000/admin/fakultas
+          - img [ref=f23e18]
+          - generic [ref=f23e20]: Fakultas
+        - link "Program Studi" [ref=f23e21] [cursor=pointer]:
+          - /url: http://localhost:8000/admin/program-studi
+          - img [ref=f23e22]
+          - generic [ref=f23e24]: Program Studi
+        - link "Dosen" [ref=f23e25] [cursor=pointer]:
+          - /url: http://localhost:8000/admin/dosen
+          - img [ref=f23e26]
+          - generic [ref=f23e28]: Dosen
+        - paragraph [ref=f23e29]: Sistem
+        - link "Admin" [ref=f23e30] [cursor=pointer]:
+          - /url: http://localhost:8000/admin/users
+          - img [ref=f23e31]
+          - generic [ref=f23e34]: Admin
+        - link "FAQ & AI" [ref=f23e35] [cursor=pointer]:
+          - /url: http://localhost:8000/admin/faq
+          - img [ref=f23e36]
+          - generic [ref=f23e38]: FAQ & AI
+      - button "Keluar" [ref=f23e41] [cursor=pointer]:
+        - img [ref=f23e42]
+        - generic [ref=f23e44]: Keluar
+  - generic [ref=f23e45]:
+    - banner [ref=f23e46]:
+      - button [ref=f23e47] [cursor=pointer]:
+        - img [ref=f23e48]
+      - generic [ref=f23e51]: Laravel
+      - generic [ref=f23e52]:
+        - generic [ref=f23e53]: Admin Utama
+        - generic [ref=f23e54]: admin
+        - button "Keluar" [ref=f23e56] [cursor=pointer]:
+          - img [ref=f23e57]
+    - main [ref=f23e59]:
+      - generic [ref=f23e60]:
+        - heading "Dashboard" [level=1] [ref=f23e62]
+        - generic [ref=f23e63]:
+          - generic [ref=f23e64]:
+            - generic [ref=f23e65]:
+              - paragraph [ref=f23e66]: Fakultas
+              - paragraph [ref=f23e67]: "3"
+            - generic [ref=f23e68]:
+              - paragraph [ref=f23e69]: Program Studi
+              - paragraph [ref=f23e70]: "6"
+            - generic [ref=f23e71]:
+              - paragraph [ref=f23e72]: Dosen
+              - paragraph [ref=f23e73]: "16"
+            - generic [ref=f23e74]:
+              - paragraph [ref=f23e75]: Interaksi AI
+              - paragraph [ref=f23e76]: "2"
+          - generic [ref=f23e77]:
+            - generic [ref=f23e78]:
+              - generic [ref=f23e79]:
+                - generic [ref=f23e80]:
+                  - heading "Kandidat FAQ" [level=2] [ref=f23e81]
+                  - paragraph [ref=f23e82]: Berdasarkan frekuensi & confidence score
+                - link "Lihat semua" [ref=f23e83] [cursor=pointer]:
+                  - /url: http://localhost:8000/admin/faq?tab=log
+              - generic [ref=f23e84]:
+                - generic [ref=f23e85]:
+                  - generic [ref=f23e86]:
+                    - generic [ref=f23e87]: new
+                    - generic [ref=f23e88]: Biaya
+                    - generic [ref=f23e89]: · 1x
+                  - paragraph [ref=f23e90]: Biaya SPP per semester berapa?
+                  - paragraph [ref=f23e91]: "Biaya SPP (Biaya Pendidikan) per semester di Universitas Adzkia untuk mahasiswa S1 adalah sebagai berikut, tergantung pada fakultas: | Fakultas | Biaya SPP per Semester | |----------|----------------------| | **Fakultas Teknik dan Informatika (FTI)** | **Rp 5.000.000,-** | | **Fakultas Ekonomi dan Bisnis (FEB)** | **Rp 4.500.000,-** | | **Fakultas Ilmu Sosial dan Ilmu Politik (FISIP)** | **Rp 4.000.000,-** | Pembayaran dapat dilakukan melalui transfer bank (Mandiri atau BRI) atau langsung ke bagian keuangan kampus. Jika Anda membutuhkan informasi lebih lanjut tentang pembayaran atau opsi lain, jangan ragu untuk menghubungi bagian keuangan atau Humas Universitas Adzkia."
+                  - generic [ref=f23e92]:
+                    - img [ref=f23e93]
+                    - text: 72%
+                - generic [ref=f23e95]:
+                  - generic [ref=f23e96]:
+                    - generic [ref=f23e97]: new
+                    - generic [ref=f23e98]: Umum
+                    - generic [ref=f23e99]: · 1x
+                  - paragraph [ref=f23e100]: siapa nama presiden RI sekarang?
+                  - paragraph [ref=f23e101]: Maaf, saya tidak memiliki informasi tentang presiden Republik Indonesia saat ini. Sebagai asisten informasi Universitas Adzkia, saya hanya dapat memberikan informasi yang tercantum dalam data kampus kami, seperti tentang fakultas, program studi, dosen, mata kuliah, jadwal kelas, kalender akademik, biaya kuliah, dan informasi umum kampus lainnya. Jika Anda membutuhkan informasi tentang presiden RI, silakan menghubungi sumber informasi resmi seperti website Pemerintah Indonesia atau kantor hamas.
+                  - generic [ref=f23e102]:
+                    - img [ref=f23e103]
+                    - text: 64%
+            - generic [ref=f23e105]:
+              - generic [ref=f23e106]:
+                - heading "Status Pembelajaran AI" [level=3] [ref=f23e107]
+                - generic [ref=f23e108]:
+                  - generic [ref=f23e109]:
+                    - paragraph [ref=f23e110]: Suggested
+                    - paragraph [ref=f23e111]: "0"
+                  - generic [ref=f23e112]:
+                    - paragraph [ref=f23e113]: Pending Review
+                    - paragraph [ref=f23e114]: "2"
+                  - generic [ref=f23e115]:
+                    - paragraph [ref=f23e116]: High Confidence
+                    - paragraph [ref=f23e117]: "0"
+                  - generic [ref=f23e118]:
+                    - paragraph [ref=f23e119]: Promoted
+                    - paragraph [ref=f23e120]: "0"
+              - generic [ref=f23e121]:
+                - heading "Topik Populer" [level=3] [ref=f23e122]
+                - generic [ref=f23e123]:
+                  - generic [ref=f23e124]: Biaya
+                  - generic [ref=f23e125]: 1x
+                - generic [ref=f23e126]:
+                  - generic [ref=f23e127]: Umum
+                  - generic [ref=f23e128]: 1x
+              - link "FuzanAI Uji coba asisten AI kampus" [ref=f23e129] [cursor=pointer]:
+                - /url: http://localhost:8000/ai
+                - generic [ref=f23e130]:
+                  - generic [ref=f23e131]:
+                    - heading "FuzanAI" [level=3] [ref=f23e132]
+                    - paragraph [ref=f23e133]: Uji coba asisten AI kampus
+                  - img [ref=f23e134]

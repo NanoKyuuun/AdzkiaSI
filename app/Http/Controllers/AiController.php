@@ -2,87 +2,154 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AiQuestionLog;
+use App\Models\Fakultas;
 use App\Models\Dosen;
-use App\Models\Mahasiswa;
+use App\Models\Faq;
 use App\Models\ProgramStudi;
+use App\Models\MataKuliah;
+use App\Models\Kelas;
+use App\Models\InformasiKampus;
+use App\Models\KalenderAkademik;
+use App\Services\AiLearningService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Log;
 
 class AiController extends Controller
 {
+    public function __construct(private readonly AiLearningService $aiLearningService)
+    {
+    }
+
     public function index()
     {
-        return view('ai-feature');
+        return view('ai-feature', [
+            'suggestions' => $this->aiLearningService->getSuggestedQuestions(),
+        ]);
     }
 
     public function ask(Request $request)
     {
-        $prompt  = $request->input('prompt');
-        $history = $request->input('history', []); // riwayat percakapan dari client
-
-        // 1. Ambil data Dosen
-        $dosens = Dosen::with('programStudi')->get();
-        $konteksDosen = $dosens->map(fn($d) => [
-            'nama'    => $d->nama    ?? 'Tanpa Nama',
-            'prodi'   => optional($d->programStudi)->nama_prodi ?? 'Belum Diatur',
-            'jabatan' => $d->jabatan ?? '-',
-            'nidn'    => $d->nidn    ?? '-',
-            'email'   => $d->email   ?? '-',
-        ])->toArray();
-
-        // 2. Ambil data Program Studi
-        $prodis = ProgramStudi::with('fakultas')->get();
-        $konteksProdi = $prodis->map(fn($p) => [
-            'nama_prodi' => $p->nama_prodi    ?? '-',
-            'jenjang'    => $p->jenjang       ?? '-',
-            'kode_prodi' => $p->kode_prodi    ?? '-',
-            'fakultas'   => optional($p->fakultas)->name_fakultas ?? '-',
-        ])->toArray();
-
-        // 3. Ambil ringkasan Mahasiswa (jumlah per prodi)
-        $konteksMahasiswa = Mahasiswa::with('programStudi')
-            ->get()
-            ->groupBy(fn($m) => optional($m->programStudi)->nama_prodi ?? 'Tidak Diketahui')
-            ->map(fn($group, $prodi) => [
-                'prodi'  => $prodi,
-                'jumlah' => $group->count(),
-                'aktif'  => $group->where('status', 'aktif')->count(),
-            ])
-            ->values()
-            ->toArray();
-
-        // 4. Log untuk debugging
-        Log::info('AI Request dikirim ke Nuxt', [
-            'prompt'          => $prompt,
-            'jumlah_dosen'    => count($konteksDosen),
-            'jumlah_prodi'    => count($konteksProdi),
-            'jumlah_history'  => count($history),
+        $payload = $request->validate([
+            'prompt' => ['required', 'string', 'max:2000'],
+            'history' => ['nullable', 'array'],
+            'history.*.role' => ['required_with:history', 'string'],
+            'history.*.content' => ['required_with:history', 'string'],
         ]);
 
+        $prompt = $payload['prompt'];
+        $history = $payload['history'] ?? [];
+
+        // 1. DATA FAKULTAS
+        $konteksFakultas = Fakultas::all()
+            ->map(fn ($f) => ['nama' => $f->name_fakultas])
+            ->toArray();
+
+        // 2. DATA PROGRAM STUDI
+        $konteksProdi = ProgramStudi::with('fakultas')
+            ->get()
+            ->map(fn ($p) => [
+                'nama' => $p->nama_prodi,
+                'fakultas' => optional($p->fakultas)->name_fakultas,
+            ])
+            ->toArray();
+
+        // 3. DATA DOSEN
+        $konteksDosen = Dosen::with('programStudi')
+            ->get()
+            ->map(fn ($d) => [
+                'nama' => $d->nama,
+                'nidn' => $d->nidn,
+                'prodi' => optional($d->programStudi)->nama_prodi,
+                'jabatan' => $d->jabatan,
+                'email' => $d->email,
+            ])
+            ->toArray();
+
+        // 4. DATA FAQ (Termasuk SPP & Biaya)
+        $konteksFaq = Faq::active()
+            ->get()
+            ->map(fn ($f) => [
+                'pertanyaan' => $f->pertanyaan,
+                'jawaban' => $f->jawaban,
+                'kategori' => $f->kategori,
+            ])
+            ->toArray();
+
+        // 5. DATA MATA KULIAH
+        $konteksMk = MataKuliah::with('programStudi')
+            ->get()
+            ->map(fn ($m) => [
+                'kode' => $m->kode_mk,
+                'nama' => $m->nama_mk,
+                'sks' => $m->sks,
+                'semester' => $m->semester,
+                'prodi' => optional($m->programStudi)->nama_prodi,
+            ])
+            ->toArray();
+
+        // 6. DATA KELAS
+        $konteksKelas = Kelas::with(['mataKuliah', 'dosen'])
+            ->get()
+            ->map(fn ($k) => [
+                'nama_kelas' => $k->nama_kelas,
+                'mata_kuliah' => optional($k->mataKuliah)->nama_mk,
+                'dosen' => optional($k->dosen)->nama,
+                'tahun_ajaran' => $k->tahun_ajaran,
+            ])
+            ->toArray();
+
+        // 7. DATA INFORMASI KAMPUS
+        $konteksInfo = InformasiKampus::all()
+            ->map(fn ($i) => ['key' => $i->key, 'value' => $i->value])
+            ->toArray();
+
+        // 8. DATA KALENDER AKADEMIK
+        $konteksKalender = KalenderAkademik::all()
+            ->map(fn ($k) => [
+                'acara' => $k->acara,
+                'mulai' => $k->tanggal_mulai->format('d M Y'),
+                'selesai' => $k->tanggal_selesai?->format('d M Y'),
+                'kategori' => $k->kategori,
+            ])
+            ->toArray();
+
+        $konteksLog = $this->aiLearningService->findRelevantLogs($prompt);
+        $konteksAlias = $this->aiLearningService->getAliasContext();
+        $aiEndpoint = rtrim(config('services.fuzan_ai.url', 'http://localhost:3000'), '/').'/api/ai';
+
         try {
-            // 5. Kirim ke Nuxt (fuzan) — port 3000
-            $response = Http::timeout(60)->post('http://localhost:3000/api/ai', [
-                'prompt'           => $prompt,
-                'history'          => $history,
-                'konteks_dosen'    => $konteksDosen,
-                'konteks_prodi'    => $konteksProdi,
-                'konteks_mahasiswa'=> $konteksMahasiswa,
+            $response = Http::timeout(60)->post($aiEndpoint, [
+                'prompt' => $prompt,
+                'history' => $history,
+                'konteks_fakultas' => $konteksFakultas,
+                'konteks_prodi' => $konteksProdi,
+                'konteks_dosen' => $konteksDosen,
+                'konteks_faq' => $konteksFaq,
+                'konteks_mk' => $konteksMk,
+                'konteks_kelas' => $konteksKelas,
+                'konteks_info' => $konteksInfo,
+                'konteks_kalender' => $konteksKalender,
+                'konteks_log' => $konteksLog,
+                'konteks_alias' => $konteksAlias,
             ]);
 
             if ($response->successful()) {
-                return response()->json([
-                    'success' => true,
-                    'result'  => $response->json()['result'],
-                ]);
+                $jawabanAi = $response->json()['result'] ?? null;
+
+                $this->simpanLog($prompt, $jawabanAi);
+
+                return response()->json(['success' => true, 'result' => $jawabanAi]);
             }
 
-            Log::error('Nuxt AI error response', ['body' => (string) $response->body()]);
-            return response()->json(['success' => false, 'message' => 'Server AI tidak memberikan response yang valid.'], 500);
-
+            return response()->json(['success' => false, 'message' => 'Gagal terhubung ke AI.'], 500);
         } catch (\Exception $e) {
-            Log::error('Koneksi ke Nuxt gagal', ['error' => $e->getMessage()]);
-            return response()->json(['success' => false, 'message' => 'Tidak dapat terhubung ke AI. Pastikan Nuxt (fuzan) berjalan di port 3000.'], 500);
+            return response()->json(['success' => false, 'message' => 'Server AI offline.'], 500);
         }
+    }
+
+    private function simpanLog(string $pertanyaan, ?string $jawabanAi): AiQuestionLog
+    {
+        return $this->aiLearningService->logInteraction($pertanyaan, $jawabanAi);
     }
 }

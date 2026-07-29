@@ -1,0 +1,48 @@
+- generic [ref=f3e2]:
+  - complementary [ref=f3e3]:
+    - generic [ref=f3e4]:
+      - img [ref=f3e6]
+      - generic [ref=f3e8]:
+        - heading "FuzanAI" [level=1] [ref=f3e9]
+        - paragraph [ref=f3e10]: Asisten Akademik Kampus
+    - button "Percakapan Baru" [ref=f3e12] [cursor=pointer]:
+      - img [ref=f3e13]
+      - text: Percakapan Baru
+    - generic [ref=f3e15]:
+      - paragraph [ref=f3e16]: Pertanyaan Populer
+      - generic [ref=f3e17]:
+        - button "Biaya SPP per semester berapa?" [ref=f3e18] [cursor=pointer]
+        - button "Apakah ada biaya gedung?" [ref=f3e19] [cursor=pointer]
+        - button "Apa saja jalur pendaftaran?" [ref=f3e20] [cursor=pointer]
+        - button "Bagaimana daftar ulang?" [ref=f3e21] [cursor=pointer]
+    - generic [ref=f3e26]: Powered by OpenRouter AI
+  - main [ref=f3e27]:
+    - generic [ref=f3e28]:
+      - generic [ref=f3e29]:
+        - link "Beranda" [ref=f3e30] [cursor=pointer]:
+          - /url: http://localhost:8000
+          - img [ref=f3e31]
+          - generic [ref=f3e33]: Beranda
+        - generic [ref=f3e34]:
+          - heading "Percakapan Baru" [level=2] [ref=f3e35]
+          - paragraph [ref=f3e36]: 0 pesan
+      - generic [ref=f3e40]: OpenRouter
+    - generic [ref=f3e42]:
+      - img [ref=f3e44]
+      - heading "Halo! Saya FuzanAI 👋" [level=3] [ref=f3e46]
+      - paragraph [ref=f3e47]: Asisten cerdas yang terhubung langsung ke database kampus. Tanya apa saja tentang dosen, prodi, mahasiswa, atau informasi akademik lainnya.
+      - generic [ref=f3e48]:
+        - button "Biaya SPP per semester berapa?" [ref=f3e49] [cursor=pointer]:
+          - paragraph [ref=f3e50]: Biaya SPP per semester berapa?
+        - button "Apakah ada biaya gedung?" [ref=f3e51] [cursor=pointer]:
+          - paragraph [ref=f3e52]: Apakah ada biaya gedung?
+        - button "Apa saja jalur pendaftaran?" [ref=f3e53] [cursor=pointer]:
+          - paragraph [ref=f3e54]: Apa saja jalur pendaftaran?
+        - button "Bagaimana daftar ulang?" [ref=f3e55] [cursor=pointer]:
+          - paragraph [ref=f3e56]: Bagaimana daftar ulang?
+    - generic [ref=f3e58]:
+      - generic [ref=f3e59]:
+        - textbox "Tanya apa saja tentang kampus... (Enter untuk kirim)" [ref=f3e60]
+        - button [disabled] [ref=f3e61]:
+          - img [ref=f3e62]
+      - paragraph [ref=f3e64]: FuzanAI terhubung ke database kampus secara real-time · Tekan Enter untuk kirim

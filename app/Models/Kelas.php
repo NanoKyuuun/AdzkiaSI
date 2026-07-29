@@ -18,8 +18,5 @@ class Kelas extends Model
         return $this->belongsTo(Dosen::class);
     }
 
-    public function krs()
-    {
-        return $this->hasMany(Krs::class);
-    }
+    // ponytail: Krs removed (mahasiswa portal cleanup)
 }

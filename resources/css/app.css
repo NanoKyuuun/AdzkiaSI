@@ -4,6 +4,110 @@
 @source '../../storage/framework/views/*.php';
 @source '../**/*.blade.php';
 @source '../**/*.js';
-@plugin "daisyui"; 
 
+/* ponytail: design tokens from DESAIN.md — Tailwind v4 @theme */
+@theme {
+  --color-brand-navy-900: #293B5F;
+  --color-brand-navy-800: #344C70;
+  --color-brand-cyan-700: #007D9E;
+  --color-brand-cyan-500: #00B4E4;
+  --color-brand-cyan-100: #DFF5FA;
+  --color-brand-cyan-050: #EFFBFD;
 
+  --color-neutral-900: #26354A;
+  --color-neutral-700: #3F4C5E;
+  --color-neutral-500: #687584;
+  --color-neutral-300: #C2CED7;
+  --color-neutral-200: #D9E2E8;
+  --color-neutral-100: #E7E9F0;
+  --color-neutral-050: #F2F7F9;
+  --color-neutral-025: #F9FBFC;
+  --color-neutral-000: #FFFFFF;
+
+  --color-status-success-text: #137A5B;
+  --color-status-success-bg: #E7F7F1;
+  --color-status-success-border: #B9E8D8;
+  --color-status-danger-text: #C23850;
+  --color-status-danger-bg: #FDECEF;
+  --color-status-danger-border: #F4C4CD;
+  --color-status-warning-text: #8A5A00;
+  --color-status-warning-bg: #FFF5D9;
+  --color-status-warning-border: #F2D99A;
+  --color-status-info-text: #006B86;
+  --color-status-info-bg: #E5F6FA;
+  --color-status-info-border: #B7E5EF;
+  --color-status-disabled-text: #687584;
+  --color-status-disabled-bg: #EEF1F4;
+  --color-status-disabled-border: #D8DEE5;
+
+  --shadow-soft: 0 2px 8px rgba(26, 50, 75, 0.08);
+  --shadow-overlay: 0 8px 24px rgba(26, 50, 75, 0.16);
+  --radius-badge: 4px;
+}
+
+/* ponytail: component layer */
+@layer components {
+  .btn {
+    @apply inline-flex items-center justify-center gap-1.5 font-medium text-[13px] px-3.5 h-9 rounded-[4px] border border-transparent transition-all cursor-pointer;
+  }
+  .btn-primary {
+    @apply bg-brand-cyan-700 text-white hover:opacity-90;
+  }
+  .btn-secondary {
+    @apply bg-white border-neutral-300 text-neutral-700 hover:bg-neutral-050;
+  }
+  .btn-ghost {
+    @apply bg-transparent text-neutral-500 hover:bg-neutral-050;
+  }
+  .input, .select {
+    @apply w-full py-2 px-3 border border-neutral-300 rounded-[4px] text-[14px] text-neutral-700 bg-white transition-colors;
+  }
+  .input:hover, .select:hover {
+    @apply border-neutral-500;
+  }
+  .input:focus, .select:focus {
+    @apply outline-none border-brand-cyan-700 ring-2 ring-brand-cyan-700/10;
+  }
+  .table {
+    @apply w-full border-collapse;
+  }
+  .table th {
+    @apply h-10 px-3 text-[11px] font-medium text-neutral-500 text-left uppercase bg-neutral-025;
+  }
+  .table td {
+    @apply h-11 px-3 border-t border-neutral-200 text-[12px] text-neutral-700;
+  }
+  .table tbody tr {
+    @apply transition-colors;
+  }
+  .table tbody tr:hover td {
+    @apply bg-brand-cyan-050;
+  }
+  .badge {
+    @apply inline-flex items-center px-2 py-0.5 rounded-[4px] text-[11px] font-medium;
+  }
+  .badge-success {
+    @apply bg-status-success-bg text-status-success-text;
+  }
+  .badge-danger {
+    @apply bg-status-danger-bg text-status-danger-text;
+  }
+  .badge-warning {
+    @apply bg-status-warning-bg text-status-warning-text;
+  }
+  .badge-info {
+    @apply bg-status-info-bg text-status-info-text;
+  }
+  .modal-box {
+    @apply bg-white rounded-[8px] shadow-overlay;
+  }
+}
+
+/* ponytail: base */
+body {
+  @apply font-sans bg-neutral-050 antialiased;
+}
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { @apply bg-neutral-300 rounded-[3px]; }
+dialog.modal::backdrop { background: rgba(38, 53, 74, 0.4); }

@@ -1,0 +1,14 @@
+- generic [ref=e2]:
+  - generic [ref=e3]:
+    - img [ref=e5]
+    - heading "Masuk ke KampusKu" [level=1] [ref=e7]
+    - paragraph [ref=e8]: Administrator dashboard
+  - generic [ref=e9]:
+    - generic [ref=e10]:
+      - generic [ref=e11]: Email
+      - textbox "admin@gmail.com" [active] [ref=e12]
+    - generic [ref=e13]:
+      - generic [ref=e14]: Kata Sandi
+      - textbox "password" [ref=e15]
+    - button "Masuk" [ref=e16] [cursor=pointer]
+  - paragraph [ref=e17]: © 2026 Laravel.

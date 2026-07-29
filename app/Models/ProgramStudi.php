@@ -18,10 +18,7 @@ class ProgramStudi extends Model
         return $this->hasMany(Dosen::class, 'prodi_id');
     }
 
-    public function mahasiswas()
-    {
-        return $this->hasMany(Mahasiswa::class, 'prodi_id');
-    }
+    // ponytail: mahasiswas removed (mahasiswa portal cleanup)
 
     public function mataKuliahs()
     {

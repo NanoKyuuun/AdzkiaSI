@@ -1,99 +1,124 @@
 <x-app>
-    <x-slot:title>Ringkasan Dashboard</x-slot:title>
-    <x-slot:header>Statistik Utama</x-slot:header>
+    <x-slot:title>Ringkasan Dashboard Admin</x-slot:title>
+    <x-slot:header>Dashboard</x-slot:header>
 
-    <div class="space-y-8">
-        <!-- Hero Section: Kontras Tinggi -->
-        <div class="relative overflow-hidden bg-primary text-primary-content rounded-3xl p-8 lg:p-12 shadow-xl border-4 border-primary-content/10">
-            <div class="relative z-10 max-w-3xl">
-                <span class="inline-block px-4 py-1.5 bg-white/20 backdrop-blur-md rounded-full text-xs font-black uppercase tracking-[0.2em] mb-6 border border-white/30">
-                    Laporan Sistem Aktif
-                </span>
-                <h1 class="text-4xl lg:text-6xl font-black mb-4 tracking-tighter leading-none">
-                    Halo, {{ explode(' ', Auth::user()->name)[0] }}!
-                </h1>
-                <p class="text-lg lg:text-xl font-medium opacity-90 leading-relaxed max-w-xl">
-                    Sistem dalam kondisi <span class="text-white underline decoration-wavy decoration-2 underline-offset-4 font-black">Optimal</span>. Pantau seluruh data akademik kampus Anda dalam satu tampilan cerdas.
-                </p>
-            </div>
-            
-            <!-- Dekorasi Ikon Besar -->
-            <div class="absolute top-1/2 -right-12 -translate-y-1/2 opacity-10 hidden lg:block rotate-12 scale-150">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-64 w-64" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z" />
-                </svg>
-            </div>
-        </div>
-        
-        <!-- Stats Grid: Background Putih Solid, Border Gelap -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <!-- Card Mahasiswa -->
-            <div class="bg-base-100 border-2 border-base-300 rounded-2xl p-6 shadow-sm hover:border-primary transition-all duration-300">
-                <div class="flex justify-between items-start mb-4">
-                    <div class="bg-primary/10 p-3 rounded-xl">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
-                        </svg>
-                    </div>
-                    <span class="badge badge-primary badge-outline font-bold">Total</span>
-                </div>
-                <div class="text-slate-500 text-xs font-black uppercase tracking-widest mb-1">Mahasiswa</div>
-                <div class="text-4xl font-black text-slate-900 tracking-tight">{{ $stats['total_mahasiswa'] }}</div>
-                <div class="mt-4 pt-4 border-t border-base-200 text-xs text-slate-400 font-medium italic">Data mahasiswa terverifikasi</div>
-            </div>
+    <div class="space-y-6">
 
-            <!-- Card Dosen -->
-            <div class="bg-base-100 border-2 border-base-300 rounded-2xl p-6 shadow-sm hover:border-secondary transition-all duration-300">
-                <div class="flex justify-between items-start mb-4">
-                    <div class="bg-secondary/10 p-3 rounded-xl">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-secondary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                        </svg>
-                    </div>
-                    <span class="badge badge-secondary badge-outline font-bold">Aktif</span>
-                </div>
-                <div class="text-slate-500 text-xs font-black uppercase tracking-widest mb-1">Dosen Pengajar</div>
-                <div class="text-4xl font-black text-slate-900 tracking-tight">{{ $stats['total_dosen'] }}</div>
-                <div class="mt-4 pt-4 border-t border-base-200 text-xs text-slate-400 font-medium italic">Tenaga ahli pengajar</div>
+        {{-- KPI Cards --}}
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+            <div class="bg-neutral-000 rounded-lg border border-neutral-200 shadow-soft p-5">
+                <p class="text-[11px] font-medium text-neutral-500 uppercase">Fakultas</p>
+                <p class="mt-1 text-2xl font-semibold text-neutral-900">{{ $stats['total_fakultas'] }}</p>
             </div>
-
-            <!-- Card Fakultas/Prodi -->
-            <div class="bg-base-100 border-2 border-base-300 rounded-2xl p-6 shadow-sm hover:border-accent transition-all duration-300">
-                <div class="flex justify-between items-start mb-4">
-                    <div class="bg-accent/10 p-3 rounded-xl">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-                        </svg>
-                    </div>
-                    <span class="badge badge-accent badge-outline font-bold">Unit</span>
-                </div>
-                <div class="text-slate-500 text-xs font-black uppercase tracking-widest mb-1">Fakultas / Prodi</div>
-                <div class="text-4xl font-black text-slate-900 tracking-tight">{{ $stats['total_fakultas'] }} <span class="text-xl text-slate-400">/ {{ $stats['total_prodi'] }}</span></div>
-                <div class="mt-4 pt-4 border-t border-base-200 text-xs text-slate-400 font-medium italic">Unit organisasi kampus</div>
+            <div class="bg-neutral-000 rounded-lg border border-neutral-200 shadow-soft p-5">
+                <p class="text-[11px] font-medium text-neutral-500 uppercase">Program Studi</p>
+                <p class="mt-1 text-2xl font-semibold text-neutral-900">{{ $stats['total_prodi'] }}</p>
             </div>
-
-            <!-- Card KRS Pending -->
-            <div class="bg-base-100 border-2 border-base-300 rounded-2xl p-6 shadow-sm hover:border-warning transition-all duration-300 ring-4 ring-warning/5 animate-pulse">
-                <div class="flex justify-between items-start mb-4">
-                    <div class="bg-warning/20 p-3 rounded-xl border border-warning/30">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-warning-content" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                        </svg>
-                    </div>
-                    <span class="badge badge-warning font-black shadow-sm">Urgent</span>
-                </div>
-                <div class="text-warning-content/70 text-xs font-black uppercase tracking-widest mb-1">KRS Pending</div>
-                <div class="text-4xl font-black text-warning tracking-tight">{{ $stats['krs_pending'] }}</div>
-                <div class="mt-4 pt-4 border-t border-warning/20 text-xs text-warning-content font-bold italic underline">Butuh Validasi Segera</div>
+            <div class="bg-neutral-000 rounded-lg border border-neutral-200 shadow-soft p-5">
+                <p class="text-[11px] font-medium text-neutral-500 uppercase">Dosen</p>
+                <p class="mt-1 text-2xl font-semibold text-neutral-900">{{ $stats['total_dosen'] }}</p>
+            </div>
+            <div class="bg-neutral-000 rounded-lg border border-neutral-200 shadow-soft p-5">
+                <p class="text-[11px] font-medium text-neutral-500 uppercase">Interaksi AI</p>
+                <p class="mt-1 text-2xl font-semibold text-neutral-900">{{ $stats['total_pertanyaan_ai'] }}</p>
             </div>
         </div>
 
-        <!-- Quick Info Banner -->
-        <div class="alert bg-slate-900 text-white rounded-2xl shadow-lg p-6 border-none">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-info shrink-0 w-8 h-8"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-            <div class="flex flex-col ml-2">
-                <h3 class="font-black text-lg">Catatan Maintenance:</h3>
-                <p class="text-slate-400 font-medium">Dashboard ini menggunakan tema korporat dengan kontras tinggi untuk memastikan semua informasi terbaca dengan jelas oleh admin sistem.</p>
+        <div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
+
+            {{-- FAQ Candidates --}}
+            <div class="xl:col-span-2 bg-neutral-000 rounded-lg border border-neutral-200 overflow-hidden shadow-soft">
+                <div class="flex items-center justify-between px-5 py-4 border-b border-neutral-200">
+                    <div>
+                        <h2 class="text-[16px] font-semibold text-neutral-900">Kandidat FAQ</h2>
+                        <p class="text-[12px] text-neutral-500 mt-0.5">Berdasarkan frekuensi & confidence score</p>
+                    </div>
+                    <a href="{{ route('admin.faq.index', ['tab' => 'log']) }}" class="btn btn-ghost text-xs">Lihat semua</a>
+                </div>
+
+                <div class="divide-y divide-neutral-200">
+                    @forelse($priorityLogs as $log)
+                        <div class="px-5 py-4 transition-colors hover:bg-neutral-025">
+                            <div class="flex items-center gap-2 mb-1.5">
+                                <span class="badge
+                                    {{ $log->status == \App\Models\AiQuestionLog::STATUS_SUGGESTED ? 'badge-warning' : '' }}
+                                    {{ $log->status == \App\Models\AiQuestionLog::STATUS_REVIEWED ? 'badge-success' : '' }}
+                                    {{ !in_array($log->status, [\App\Models\AiQuestionLog::STATUS_SUGGESTED, \App\Models\AiQuestionLog::STATUS_REVIEWED]) ? 'badge-info' : '' }}">
+                                    {{ $log->status }}
+                                </span>
+                                <span class="text-[11px] text-neutral-500">{{ $log->kategori_topik ?: 'Umum' }}</span>
+                                <span class="text-[11px] text-neutral-500">· {{ $log->jumlah }}x</span>
+                            </div>
+                            <p class="text-sm font-medium text-neutral-900">{{ $log->pertanyaan_user }}</p>
+                            @if($log->jawaban_ai)
+                                <p class="text-xs text-neutral-500 mt-0.5 line-clamp-2">{{ $log->jawaban_ai }}</p>
+                            @endif
+                            <div class="mt-1.5 inline-flex items-center gap-1 text-xs font-medium
+                                {{ $log->confidence_score >= 80 ? 'text-status-success-text' : ($log->confidence_score >= 65 ? 'text-status-warning-text' : 'text-neutral-500') }}">
+                                <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                                </svg>
+                                {{ $log->confidence_score }}%
+                            </div>
+                        </div>
+                    @empty
+                        <div class="px-5 py-10 text-center text-sm text-neutral-500">Belum ada kandidat FAQ yang menunggu review.</div>
+                    @endforelse
+                </div>
+            </div>
+
+            {{-- Right column --}}
+            <div class="space-y-6">
+
+                {{-- Learning Stats --}}
+                <div class="bg-neutral-000 rounded-lg border border-neutral-200 p-5 shadow-soft">
+                    <h3 class="text-sm font-semibold text-neutral-900 mb-4">Status Pembelajaran AI</h3>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <p class="text-xs text-neutral-500">Suggested</p>
+                            <p class="text-xl font-semibold text-neutral-900">{{ $learningStats['suggested'] }}</p>
+                        </div>
+                        <div>
+                            <p class="text-xs text-neutral-500">Pending Review</p>
+                            <p class="text-xl font-semibold text-neutral-900">{{ $learningStats['pending_review'] }}</p>
+                        </div>
+                        <div>
+                            <p class="text-xs text-neutral-500">High Confidence</p>
+                            <p class="text-xl font-semibold text-status-success-text">{{ $learningStats['high_confidence'] }}</p>
+                        </div>
+                        <div>
+                            <p class="text-xs text-neutral-500">Promoted</p>
+                            <p class="text-xl font-semibold text-brand-cyan-700">{{ $learningStats['promoted'] }}</p>
+                        </div>
+                    </div>
+                </div>
+
+                {{-- Top Topics --}}
+                <div class="bg-neutral-000 rounded-lg border border-neutral-200 p-5 shadow-soft">
+                    <h3 class="text-sm font-semibold text-neutral-900 mb-3">Topik Populer</h3>
+                    @forelse($topTopics as $topic)
+                        <div class="flex items-center justify-between py-2 border-b border-neutral-200 last:border-0">
+                            <span class="text-sm text-neutral-700">{{ $topic->kategori_topik ?: 'Umum' }}</span>
+                            <span class="text-xs font-medium text-neutral-500">{{ (int) $topic->total }}x</span>
+                        </div>
+                    @empty
+                        <p class="text-sm text-neutral-500">Belum ada data.</p>
+                    @endforelse
+                </div>
+
+                {{-- CTA --}}
+                <a href="{{ route('ai.index') }}" class="block bg-brand-cyan-700 rounded-lg p-5 text-white hover:bg-brand-cyan-500 transition-colors shadow-soft">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <h3 class="text-sm font-semibold">FuzanAI</h3>
+                            <p class="text-xs text-white/70 mt-0.5">Uji coba asisten AI kampus</p>
+                        </div>
+                        <svg class="w-5 h-5 text-white/70" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+                        </svg>
+                    </div>
+                </a>
+
             </div>
         </div>
     </div>
